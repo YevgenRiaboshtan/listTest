@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.ThreadLocalRandom;
 
-abstract class ListsTest {
+abstract class ListsTest implements ListsTests {
 
     private final List<Long> listToAdding;
     private final List<Long> listToInnerAdding;
@@ -16,28 +16,23 @@ abstract class ListsTest {
         this.listToInnerAdding = listToInnerAdding;
     }
 
-    public void runAdding(int items) {
-        addToList(items);
-        addIntoList(items);
-    }
-
-    private void addToList(int items) {
+    @Override
+    public long addToList(int items) {
         final long start = System.currentTimeMillis();
         final Long newItem = 1L;
         for (int i = 0; i < items; i++) {
             listToAdding.add(newItem);
         }
-        final long stop = System.currentTimeMillis();
-        System.out.println(listToAdding.getClass() + " items: " + listToAdding.size() + "; Adding: " + (stop - start) + "ms");
+        return System.currentTimeMillis() - start;
     }
 
-    private void addIntoList(int items) {
+    @Override
+    public long addIntoList(int items) {
         final long start = System.currentTimeMillis();
         final Long newItem = 1L;
         for (int i = 0; i < items; i++) {
             listToInnerAdding.add(ThreadLocalRandom.current().nextInt(i == 0 ? 1 : i), newItem);
         }
-        final long stop = System.currentTimeMillis();
-        System.out.println(listToInnerAdding.getClass() + " items: " + listToInnerAdding.size() + "; Inner adding: " + (stop - start) + "ms");
+        return System.currentTimeMillis() - start;
     }
 }
