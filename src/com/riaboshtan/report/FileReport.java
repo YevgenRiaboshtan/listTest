@@ -20,8 +20,9 @@ public class FileReport {
 
     private void printHeaders(List<String> testClasses) {
         StringBuilder msg = new StringBuilder();
+        msg.append("items");
         for (String testClass : testClasses) {
-            msg.append("items").append(";").append(testClass);
+            msg.append(";").append(testClass);
         }
         printStream.println(msg.toString());
     }
